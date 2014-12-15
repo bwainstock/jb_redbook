@@ -1,0 +1,9 @@
+{%if latest_prediction_list %}
+	<ul>
+	{% for prediction in latest_prediction_list %}
+	<li><a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No predictions made.</p>
+{% endif %}
