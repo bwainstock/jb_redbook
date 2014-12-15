@@ -6,9 +6,9 @@ urlpatterns = patterns('',
 	# ex: /
 	url(r'^$', views.index, name="index"),
 	# ex: /4/
-	url(r'^(?P<prediction_id>\d+)/$', views.detail, name='detail'),
+	url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'),
 	# ex: /4/results/
-	url(r'^(?P<prediction_id>\d+)/results/$', views.results, name='results'),
+	url(r'^(?P<pk>\d+)/results/$', views.ResultsView.as_view(), name='results'),
 	# ex: /4/vote/
 	url(r'^(?P<prediction_id>\d+)/vote/$', views.vote, name='vote'),
 )

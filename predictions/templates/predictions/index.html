@@ -1,9 +1,18 @@
-{%if latest_prediction_list %}
+{% if latest_predictions %}
 	<ul>
-	{% for prediction in latest_prediction_list %}
-	<li><a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a></li>
+	{% for prediction in latest_predictions %}
+	<li><a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a> - {{ prediction.thumbs_up }} - {{ prediction.thumbs_down }}</li>
 	{% endfor %}
 	</ul>
+
+	<form action="" method="post">
+		<table>
+			{{ form.as_table }}
+		</table>
+	{% csrf_token %}
+	<input type="submit" value="Submit">
+	</form>
+
 {% else %}
 	<p>No predictions made.</p>
 {% endif %}

@@ -1,3 +1,10 @@
 <h1>{{ prediction.prediction_text }}</h1>
 <strong>Yes: {{ prediction.thumbs_up }} No: {{ prediction.thumbs_down }}</strong>
 
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'predictions:vote' prediction.id %}" method="post">
+{% csrf_token %}
+<input type="submit" name="vote" id="thumbs_up" value="thumbs_up" />
+<input type="submit" name="vote" id="thumbs_down" value="thumbs_down" />
+</form>
