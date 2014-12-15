@@ -1,7 +1,15 @@
 {% if latest_predictions %}
 	<ul>
 	{% for prediction in latest_predictions %}
-	<li><a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a> - {{ prediction.thumbs_up }} - {{ prediction.thumbs_down }}</li>
+	<li>
+		<a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a>
+		{{ prediction.thumbs_up }} - {{ prediction.thumbs_down }}
+		<form action="{% url 'predictions:vote' prediction.id %}" method="post">
+			{% csrf_token %}
+			<input type="submit" name="vote" id="thumbs_up" value="thumbs_up" />		
+			<input type="submit" name="vote" id="thumbs_down" value="thumbs_down" />		
+		</form>
+	</li>
 	{% endfor %}
 	</ul>
 

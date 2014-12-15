@@ -26,7 +26,7 @@ def index(request):
         return HttpResponseRedirect(reverse('predictions:index'))
     else:
         form = PredictionForm()
-        latest_predictions = Prediction.objects.order_by('-deadline_date')
+        latest_predictions = Prediction.objects.order_by('-thumbs_up')
         return_dict = {'form': form, 'latest_predictions': latest_predictions}
     return render(request, 'predictions/index.html', return_dict) 
 
@@ -50,5 +50,5 @@ def vote(request, prediction_id):
         p.thumbs_down += 1
 
     p.save()    
-    return HttpResponseRedirect(reverse('predictions:detail', args=(p.id,)))
+    return HttpResponseRedirect(reverse('predictions:index'))
 
