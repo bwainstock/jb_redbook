@@ -6,7 +6,7 @@ from django.utils import timezone
 
 class Prediction(models.Model):
 
-    prediction_text = models.TextField()
+    prediction_text = models.TextField(unique=True)
     prediction_date = models.DateField('date predicted', auto_now_add=True)
     deadline_date = models.DateField('date prediction comes true')
     thumbs_up = models.IntegerField(default=0)
