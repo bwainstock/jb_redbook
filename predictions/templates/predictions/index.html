@@ -1,9 +1,15 @@
+<html>
+<head>
+	<title>Red Book Predictions</title>
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+</head>
+<body>
 {% if latest_predictions %}
 	<ul>
 	{% for prediction in latest_predictions %}
 	<li>
 		<a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a>
-		{{ prediction.thumbs_up }} - {{ prediction.thumbs_down }}
+		{{ prediction.thumbs_up }} - {{ prediction.thumbs_down }} - {{ prediction.deadline_date }}
 		<form action="{% url 'predictions:vote' prediction.id %}" method="post">
 			{% csrf_token %}
 			<input type="submit" name="vote" id="thumbs_up" value="thumbs_up" />		
@@ -24,3 +30,17 @@
 {% else %}
 	<p>No predictions made.</p>
 {% endif %}
+
+<!-- SCRIPTS -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script>
+	$(document).ready(function() {
+	    $('.datepicker').datepicker({
+			changeMonth: true,
+			changeYear: true,
+		});
+	});
+</script>
+</body>
+</html>
