@@ -5,7 +5,15 @@
 <div class="container">
 
 <header><h1>Redbook Predictions</h1></header>
-	
+	<div class="row">
+		<div class="col-xs-6 col-xs-offset-3">
+		  <div class="btn-group" role="group">
+		    <button type="button" class="btn btn-default" id="sort-newest">Newest</button>
+		    <button type="button" class="btn btn-default" id="sort-thumbs-up">Most Thumbs Up</button>
+		    <button type="button" class="btn btn-default" id="sort-thumbs-down">Most Thumbs Down</button>
+		  </div>
+		</div>
+	</div>	
 	<div class="row">
 		<div class="col-xs-6 col-xs-offset-3">
 			<form action="" method="post" class="form-group">
@@ -19,42 +27,43 @@
 	</div>
 
 {% if latest_predictions %}
-	{% for prediction in latest_predictions %}	
 	<div class="row">
-		<div class="col-xs-6 col-xs-offset-3" id="prediction-panel">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<div class="left">
-						{{ prediction.deadline_date }}
-					</div>
-					<div class="right">
-						<form action="{% url 'predictions:vote' prediction.id %}" method="post" class="form-group" id="votes">
-							{% csrf_token %}
+		<div class="col-xs-6 col-xs-offset-3">
+		  <div id="prediction-container">
+	{% for prediction in latest_predictions %}	
+			<div class="panel panel-default" data-date="{{ prediction.deadline_date|date:"U" }}" data-up="{{ prediction.thumbs_up }}" data-down="{{ prediction.thumbs_down }}">
+			  <div class="panel-heading">
+			    <div class="left">
+			      {{ prediction.deadline_date }}
+			    </div>
+			    <div class="right">
+				<form action="{% url 'predictions:vote' prediction.id %}" method="post" class="form-group" id="votes">
+					{% csrf_token %}
 
-							<button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_up">
-								{{ prediction.thumbs_up }}
-								<span class="glyphicon glyphicon-thumbs-up" alt="submit"></span>
-							</button>
+					<button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_up">
+						{{ prediction.thumbs_up }}
+						<span class="glyphicon glyphicon-thumbs-up" alt="submit"></span>
+					</button>
 
-							<button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_down">
-								{{ prediction.thumbs_down }}
-								<span class="glyphicon glyphicon-thumbs-down" alt="submit"></span>
-							</button>
-						</form>					
-					</div>
-				</div>
-				<div class="panel-body">
-					<a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a>
-				</div>
-			</div>
-		</div>
-	</div>
+					<button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_down">
+						{{ prediction.thumbs_down }}
+						<span class="glyphicon glyphicon-thumbs-down" alt="submit"></span>
+					</button>
+				</form>					
+			    </div>
+		          </div>
+			  <div class="panel-body">
+			    <a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a>
+			  </div>
+		  	</div><!-Panel->
 	{% endfor %}
-
+		  </div>
+		</div>
 {% else %}
 	<p>No predictions made.</p>
 {% endif %}
-</div>	
+	</div><!-predictions row->
+</div><!-Container->	
 {% endblock %}
 
 {% block scripts %}
