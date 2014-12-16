@@ -20,8 +20,8 @@ def index(request):
         form = PredictionForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-        p = Prediction(prediction_text=data['prediction'], deadline_date=data['deadline'])
-        p.save()
+            p = Prediction(prediction_text=data['prediction'], deadline_date=data['deadline'])
+            p.save()
 
         return HttpResponseRedirect(reverse('predictions:index'))
     else:
@@ -43,12 +43,13 @@ class ResultsView(generic.DetailView):
 
 def vote(request, prediction_id):
     p = get_object_or_404(Prediction, pk=prediction_id)
-    
+    # if request.POST['vote']: 
     if request.POST['vote'] == 'thumbs_up':
         p.thumbs_up += 1
     if request.POST['vote'] == 'thumbs_down':
         p.thumbs_down += 1
 
     p.save()    
+
     return HttpResponseRedirect(reverse('predictions:index'))
 
