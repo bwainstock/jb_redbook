@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
+from django.contrib.auth import authenticate, login
 
 from predictions.models import Prediction
-from predictions.forms import PredictionForm
+from predictions.forms import PredictionForm, UserForm
 
 class IndexView(generic.ListView):
     template_name = 'predictions/index.html'
@@ -53,3 +54,41 @@ def vote(request, prediction_id):
 
     return HttpResponseRedirect(reverse('predictions:index'))
 
+def register(request):
+    registered = False
+
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+            registered = True
+
+        else:
+            print user_form.errors
+
+    else:
+        user_form = UserForm()
+
+    return render(request, 'predictions/register.html', {'user_form': user_form, 'registered': registered})
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('predictions:index'))
+            else:
+                return HttpResponse('Your account is disabled.')
+
+        else:
+            print "Invalid login details: {0}, {1}".format(username, password)
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'predictions/login.html', {})
