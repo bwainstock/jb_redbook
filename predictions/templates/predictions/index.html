@@ -4,76 +4,84 @@
 
 <div class="container">
 
-	<header><h1>Redbook Predictions </h1></header>
-	<h2>{{ user }}</h2>
-	<div class="row">
-		<div class="col-xs-6 col-xs-offset-3">
-		  <div class="btn-group" role="group">
-		    <button type="button" class="btn btn-default" id="sort-newest">Newest</button>
-		    <button type="button" class="btn btn-default" id="sort-thumbs-up">Most Thumbs Up</button>
-		    <button type="button" class="btn btn-default" id="sort-thumbs-down">Most Thumbs Down</button>
-		  </div>
-		</div>
-	</div>	
-	<div class="row">
-		<div class="col-xs-6 col-xs-offset-3">
-			<form action="" method="post" class="form-group">
-				<table>
-					{{ form.as_p }}
-				</table>
-			{% csrf_token %}
-			<input type="submit" value="Submit" class="btn btn-default">
-			</form>
-		</div>
-	</div>
+  <header><h1>Redbook Predictions </h1></header>
+
+{% if perms.predictions.add_prediction %}
+  <div class="row">
+    <div class="col-xs-12">
+      <form action="" method="post" class="form-group">
+        <table>
+          {{ form.as_p }}
+        </table>
+      {% csrf_token %}
+      <input type="submit" value="Submit" class="btn btn-default">
+      </form>
+    </div>
+  </div><!-- Prediction Input Row -->
+{% endif %}
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div id="buttons">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" id="sort-newest">Newest</button>
+          <button type="button" class="btn btn-default" id="sort-thumbs-up">Most Thumbs Up</button>
+          <button type="button" class="btn btn-default" id="sort-thumbs-down">Most Thumbs Down</button>
+        </div>
+      </div>
+    </div>
+  </div><!-- Button Row -->  
 
 {% if latest_predictions %}
-	<div class="row">
-		<div class="col-xs-6 col-xs-offset-3">
-		  <div id="prediction-container">
-	{% for prediction in latest_predictions %}	
-			<div class="panel panel-default" data-date="{{ prediction.deadline_date|date:"U" }}" data-up="{{ prediction.thumbs_up }}" data-down="{{ prediction.thumbs_down }}">
-			  <div class="panel-heading">
-			    <div class="left">
-			      {{ prediction.deadline_date }}
-			    </div>
-			    <div class="right">
-				<form action="{% url 'predictions:vote' prediction.id %}" method="post" class="form-group" id="votes">
-					{% csrf_token %}
+  <div class="row">
+    <div class="col-xs-12">
+      <div id="prediction-container">
+  {% for prediction in latest_predictions %}  
+      <div class="panel panel-default" data-date="{{ prediction.deadline_date|date:"U" }}" data-up="{{ prediction.thumbs_up }}" data-down="{{ prediction.thumbs_down }}">
+        <div class="panel-heading">
+          <div class="left">
+            {{ prediction.deadline_date }}
+          </div>
+          <div class="right">
+        <form action="{% url 'predictions:vote' prediction.id %}" method="post" class="form-group" id="votes">
+          {% csrf_token %}
 
-					<button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_up">
-						{{ prediction.thumbs_up }}
-						<span class="glyphicon glyphicon-thumbs-up" alt="submit"></span>
-					</button>
+          <button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_up">
+            {{ prediction.thumbs_up }}
+            <span class="glyphicon glyphicon-thumbs-up" alt="submit"></span>
+          </button>
 
-					<button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_down">
-						{{ prediction.thumbs_down }}
-						<span class="glyphicon glyphicon-thumbs-down" alt="submit"></span>
-					</button>
-				</form>					
-			    </div>
-		          </div>
-			  <div class="panel-body">
-			    <a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a>
-			  </div>
-		  	</div><!-Panel->
-	{% endfor %}
-		  </div>
-		</div>
+          <button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_down">
+            {{ prediction.thumbs_down }}
+            <span class="glyphicon glyphicon-thumbs-down" alt="submit"></span>
+          </button>
+        </form>         
+          </div>
+              </div>
+        <div class="panel-body">
+          <a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a>
+        </div>
+        </div><!-- Panel -->
+  {% endfor %}
+      </div>
+    </div>
+
 {% else %}
-	<p>No predictions made.</p>
+  <p>No predictions made.</p>
 {% endif %}
-	</div><!-predictions row->
-</div><!-Container->	
+
+  </div><!-- Predictions Row -->
+</div><!-- Container -->
+
 {% endblock %}
 
 {% block scripts %}
 <script>
-	$(document).ready(function() {
-	    $('.datepicker').datepicker({
-			changeMonth: true,
-			changeYear: true,
-		});
-	});
+  $(document).ready(function() {
+      $('.datepicker').datepicker({
+      changeMonth: true,
+      changeYear: true,
+    });
+  });
 </script>
 {% endblock %}

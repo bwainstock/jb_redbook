@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'predictions/css/predictions.css' %}">
 </head>
 <body>
+{% include "predictions/navbar.html" %}
 
 {% block content %}
 {% endblock %}
@@ -16,6 +17,8 @@
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{% static 'predictions/js/bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'predictions/js/predictions.js' %}"></script>
+
+{% include 'predictions/footer.html' %}
 
 {% block scripts %}
 {% endblock %}
