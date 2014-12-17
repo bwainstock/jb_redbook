@@ -1,11 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from django.contrib.auth import authenticate, login
 
-from predictions.models import Prediction
 from predictions.forms import PredictionForm, UserForm
+from predictions.models import Prediction
 
 class IndexView(generic.ListView):
     template_name = 'predictions/index.html'
@@ -66,6 +67,7 @@ def register(request):
 
             registered = True
 
+            return HttpResponseRedirect(reverse('predictions:index'))
         else:
             print user_form.errors
 
@@ -92,3 +94,8 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'predictions/login.html', {})
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('predictions:index'))

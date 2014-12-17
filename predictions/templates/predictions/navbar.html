@@ -11,17 +11,19 @@
       {% if user.is_authenticated %}
       <a class="navbar-brand" href="#">{{ user }}</a>
       {% else %}
-      <a class="navbar-brand" href="{% url 'predictions:login' %}">Login</a>
+      <a class="navbar-brand" href="{% url 'predictions:register' %}">Register</a>
       {% endif %}
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
-        <li><a href="{% url 'predictions:register' %}">Register</a></li>
-        <li><a href="#contact">Contact</a></li>
         {% if user.is_authenticated %}
-        <li><a href="#logout">Logout</a></li>
+        <li><a href="{% url 'predictions:logout' %}">Logout</a></li>
+        {% else %}
+        <li><a href="{% url 'predictions:login' %}">Login</a></li>
         {% endif %}
+        <li><a href="#contact">Contact</a></li>
+
         <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
