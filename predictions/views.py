@@ -66,7 +66,11 @@ def register(request):
             user.save()
 
             registered = True
-
+            
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            login(request, user)
             return HttpResponseRedirect(reverse('predictions:index'))
         else:
             print user_form.errors
