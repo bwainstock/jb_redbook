@@ -86,3 +86,4 @@ STATIC_URL = '/static/'
 
 SITE_NAME = "JB Redbook"
 SITE_HEADER = "JB Redbook Admin"
+LOGIN_URL = '/login/'

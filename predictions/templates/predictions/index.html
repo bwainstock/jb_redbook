@@ -6,6 +6,12 @@
 
   <header><h1>Redbook Predictions </h1></header>
 
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.level_tag }}" role="alert">{{ message }}</div>
+{% endfor %}
+{% endif %}
+
 {% if perms.predictions.add_prediction %}
   <div class="row">
     <div class="col-xs-12">

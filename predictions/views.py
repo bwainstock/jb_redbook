@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -42,16 +43,20 @@ class ResultsView(generic.DetailView):
     model = Prediction
     template_name = 'predictions/results.html'
 
-
 def vote(request, prediction_id):
-    p = get_object_or_404(Prediction, pk=prediction_id)
-    # if request.POST['vote']: 
-    if request.POST['vote'] == 'thumbs_up':
-        p.thumbs_up += 1
-    if request.POST['vote'] == 'thumbs_down':
-        p.thumbs_down += 1
+    if request.user.is_authenticated():
+        p = get_object_or_404(Prediction, pk=prediction_id)
+        # if request.POST['vote']: 
+        if request.POST['vote'] == 'thumbs_up':
+            p.thumbs_up += 1
+        if request.POST['vote'] == 'thumbs_down':
+            p.thumbs_down += 1
 
-    p.save()    
+        p.save()    
+        request.user.prediction_set.add(p)
+    
+    else:
+        messages.info(request, 'Please login to vote.')
 
     return HttpResponseRedirect(reverse('predictions:index'))
 
