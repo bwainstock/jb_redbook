@@ -24,7 +24,7 @@
         <p>
             <h5>Other users who had an opinion on this topic:</h5>
 
-            {% for voted_user in prediction.user.all %}
+            {% for voted_user in prediction.up_votes.all %}
             {% if voted_user != user %}
                 <a href="{% url 'predictions:profile' user %}">{{ voted_user }}</a></br>
             {% endif %}

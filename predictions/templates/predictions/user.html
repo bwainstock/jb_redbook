@@ -10,7 +10,7 @@
         <p>
             <h5>Predictions this user has weighed in on:</h5>
 
-            {% for prediction in user.prediction_set.all %}
+            {% for prediction in user.prediction_up.all %}
                 <a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a></br>
                 <!-- {{ prediction }} -->
             {% endfor %}

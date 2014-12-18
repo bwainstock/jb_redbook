@@ -10,6 +10,8 @@ TODO
 - Make a nicer user profile
   - Show all predictions that a user has made
   - Show predictions that a user has voted on
+    - Up and down seperate
   - Show predictions ending soon
 - Commenting system (DISQUS)
 - Toggle sorting buttons (↕)
+- Include up and down voters on prediction page

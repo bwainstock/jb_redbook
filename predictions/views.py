@@ -29,7 +29,7 @@ def index(request):
         return HttpResponseRedirect(reverse('predictions:index'))
     else:
         form = PredictionForm()
-        latest_predictions = Prediction.objects.order_by('-thumbs_up')
+        latest_predictions = Prediction.objects.order_by('-up_votes')
         return_dict = {'form': form, 'latest_predictions': latest_predictions}
     return render(request, 'predictions/index.html', return_dict) 
 
@@ -47,14 +47,12 @@ def vote(request, prediction_id):
     if request.user.is_authenticated():
         p = get_object_or_404(Prediction, pk=prediction_id)
         # if request.POST['vote']: 
-        if not p in request.user.prediction_set.filter(pk=p.pk):            
+        if not p in request.user.prediction_up.filter(pk=p.pk) and not p in request.user.prediction_down.filter(pk=p.pk):
             if request.POST['vote'] == 'thumbs_up':
-                p.thumbs_up += 1
+                request.user.prediction_up.add(p)
             if request.POST['vote'] == 'thumbs_down':
-                p.thumbs_down += 1
-
+                request.user.prediction_down.add(p)
             p.save()    
-            request.user.prediction_set.add(p)
         else:
             messages.info(request, 'Please only vote once per prediction.')
     else:

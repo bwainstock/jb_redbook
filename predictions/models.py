@@ -11,10 +11,12 @@ class Prediction(models.Model):
     prediction_text = models.TextField(unique=True)
     prediction_date = models.DateField('date predicted', auto_now_add=True)
     deadline_date = models.DateField('date prediction comes true')
-    thumbs_up = models.IntegerField(default=0)
-    thumbs_down = models.IntegerField(default=0)
-    user = models.ManyToManyField(User)
-
+#    thumbs_up = models.IntegerField(default=0)
+#    thumbs_down = models.IntegerField(default=0)
+#    user = models.ManyToManyField(User)
+    up_votes = models.ManyToManyField(User, related_name='prediction_up')
+    down_votes = models.ManyToManyField(User, related_name='prediction_down')
+ 
     def __str__(self):
         return self.prediction_text
 
