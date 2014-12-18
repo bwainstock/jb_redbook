@@ -1,10 +1,35 @@
-<h1>{{ prediction.prediction_text }}</h1>
-<strong>Yes: {{ prediction.thumbs_up }} No: {{ prediction.thumbs_down }}</strong>
+{% extends "predictions/base.html" %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% block content %}
+<div class="container">
+    <h1>{{ prediction.prediction_text }}</h1>
 
-<form action="{% url 'predictions:vote' prediction.id %}" method="post">
-{% csrf_token %}
-<input type="submit" name="vote" id="thumbs_up" value="thumbs_up" />
-<input type="submit" name="vote" id="thumbs_down" value="thumbs_down" />
-</form>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form action="{% url 'predictions:vote' prediction.id %}" method="post" class="" id="votes">
+      {% csrf_token %}
+
+      <button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_up">
+        {{ prediction.thumbs_up }}
+        <span class="glyphicon glyphicon-thumbs-up" alt="submit"></span>
+      </button>
+
+      <button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_down">
+        {{ prediction.thumbs_down }}
+        <span class="glyphicon glyphicon-thumbs-down" alt="submit"></span>
+      </button>
+    </form>
+
+    <div id="voted-users">
+        <p>
+            <h5>Other users who had an opinion on this topic:</h5>
+
+            {% for voted_user in prediction.user.all %}
+            {% if voted_user != user %}
+                <a href="{% url 'predictions:profile' user %}">{{ voted_user }}</a></br>
+            {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+</div>
+{% endblock %}

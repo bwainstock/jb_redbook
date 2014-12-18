@@ -52,7 +52,7 @@
             {{ prediction.deadline_date }}
           </div>
           <div class="right">
-        <form action="{% url 'predictions:vote' prediction.id %}" method="post" class="form-group" id="votes">
+        <form action="{% url 'predictions:vote' prediction.id %}" method="post" class="" id="votes">
           {% csrf_token %}
 
           <button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_up">
@@ -64,7 +64,7 @@
             {{ prediction.thumbs_down }}
             <span class="glyphicon glyphicon-thumbs-down" alt="submit"></span>
           </button>
-        </form>         
+        </form>
           </div>
               </div>
         <div class="panel-body">

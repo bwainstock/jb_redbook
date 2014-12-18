@@ -1,1 +1,20 @@
-{{ user }}
+{% extends "predictions/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ user }}</h1>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <div id="voted-predictions">
+        <p>
+            <h5>Predictions this user has weighed in on:</h5>
+
+            {% for prediction in user.prediction_set.all %}
+                <a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a></br>
+                <!-- {{ prediction }} -->
+            {% endfor %}
+        </p>
+    </div>
+</div>
+{% endblock %}

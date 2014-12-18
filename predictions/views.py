@@ -7,15 +7,15 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 
 from predictions.forms import PredictionForm, UserForm
-from predictions.models import Prediction
+from predictions.models import Prediction, User
 
-class IndexView(generic.ListView):
-    template_name = 'predictions/index.html'
-    context_object_name = 'latest_predictions'
+# class IndexView(generic.ListView):
+#     template_name = 'predictions/index.html'
+#     context_object_name = 'latest_predictions'
 
-    def get_queryset(self):
-        """Return the last five predictions"""
-        return Prediction.objects.order_by('-prediction_date')[:5]
+#     def get_queryset(self):
+#         """Return the last five predictions"""
+#         return Prediction.objects.order_by('-prediction_date')[:5]
 
 def index(request):
 
@@ -39,9 +39,9 @@ class DetailView(generic.DetailView):
     template_name = 'predictions/detail.html'
 
 
-class ResultsView(generic.DetailView):
-    model = Prediction
-    template_name = 'predictions/results.html'
+# class ResultsView(generic.DetailView):
+#     model = Prediction
+#     template_name = 'predictions/results.html'
 
 def vote(request, prediction_id):
     if request.user.is_authenticated():
@@ -114,6 +114,7 @@ def user_logout(request):
 @login_required
 def user_profile(request, user):
     if request.user.username == user:
+        user = User.objects.get(username=user)
         return render(request, 'predictions/user.html', {'user': user})
     else:
         messages.info(request, "You can't access someone else's profile.")

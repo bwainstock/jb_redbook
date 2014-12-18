@@ -24,4 +24,3 @@ class Prediction(models.Model):
     was_predicted_recently.admin_order_field = 'prediction_date'
     was_predicted_recently.boolean = True
     was_predicted_recently.short_description = 'Recently predicted?'
-	
