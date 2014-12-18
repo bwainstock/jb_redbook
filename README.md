@@ -12,3 +12,4 @@ TODO
   - Show predictions that a user has voted on
   - Show predictions ending soon
 - Commenting system (DISQUS)
+- Toggle sorting buttons (↕)
