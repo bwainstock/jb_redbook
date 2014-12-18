@@ -17,4 +17,7 @@ urlpatterns = patterns('',
     url(r'^login/$', views.user_login, name='login'),
     # ex /logout/
     url(r'^logout/$', views.user_logout, name='logout'),
+    # ex /profile/tigren/
+    url(r'^profile/(?P<user>\w+)/$', views.user_profile, name='profile'),
+    # url(r'^profile/$', views.user_profile, name='profile'),
 )

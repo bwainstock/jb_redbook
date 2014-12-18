@@ -108,3 +108,11 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('predictions:index'))
+
+@login_required
+def user_profile(request, user):
+    if request.user.username == user:
+        return render(request, 'predictions/user.html', {'user': user})
+    else:
+        messages.info(request, "You can't access someone else's profile.")
+        return HttpResponseRedirect('/')
