@@ -11,3 +11,4 @@ TODO
   - Show all predictions that a user has made
   - Show predictions that a user has voted on
   - Show predictions ending soon
+- Commenting system (DISQUS)
