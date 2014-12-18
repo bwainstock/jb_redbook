@@ -47,14 +47,16 @@ def vote(request, prediction_id):
     if request.user.is_authenticated():
         p = get_object_or_404(Prediction, pk=prediction_id)
         # if request.POST['vote']: 
-        if request.POST['vote'] == 'thumbs_up':
-            p.thumbs_up += 1
-        if request.POST['vote'] == 'thumbs_down':
-            p.thumbs_down += 1
+        if not p in request.user.prediction_set.filter(pk=p.pk):            
+            if request.POST['vote'] == 'thumbs_up':
+                p.thumbs_up += 1
+            if request.POST['vote'] == 'thumbs_down':
+                p.thumbs_down += 1
 
-        p.save()    
-        request.user.prediction_set.add(p)
-    
+            p.save()    
+            request.user.prediction_set.add(p)
+        else:
+            messages.info(request, 'Please only vote once per prediction.')
     else:
         messages.info(request, 'Please login to vote.')
 
