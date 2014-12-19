@@ -1,3 +1,5 @@
+import itertools
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -18,7 +20,10 @@ from predictions.models import Prediction, User
 #         return Prediction.objects.order_by('-prediction_date')[:5]
 
 def index(request):
-
+    if request.user.is_authenticated():
+        for prediction in itertools.chain(request.user.prediction_up.all(), request.user.prediction_down.all()):
+            if prediction.is_expiring():
+                messages.info(request, '{}: Expiring soon!'.format(prediction.prediction_text))
     if request.method == 'POST':
         form = PredictionForm(request.POST)
         if form.is_valid():
@@ -111,9 +116,5 @@ def user_logout(request):
 
 @login_required
 def user_profile(request, user):
-    if request.user.username == user:
-        user = User.objects.get(username=user)
-        return render(request, 'predictions/user.html', {'user': user})
-    else:
-        messages.info(request, "You can't access someone else's profile.")
-        return HttpResponseRedirect('/')
+    user = User.objects.get(username=user)
+    return render(request, 'predictions/user.html', {'user': user})

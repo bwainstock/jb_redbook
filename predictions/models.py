@@ -23,6 +23,9 @@ class Prediction(models.Model):
     def was_predicted_recently(self):
         return self.prediction_date >= datetime.date.today() - datetime.timedelta(days=1)
 
+    def is_expiring(self):
+	return self.deadline_date - datetime.date.today() <= datetime.timedelta(days=3)
+
     was_predicted_recently.admin_order_field = 'prediction_date'
     was_predicted_recently.boolean = True
     was_predicted_recently.short_description = 'Recently predicted?'

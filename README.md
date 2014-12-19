@@ -6,12 +6,12 @@ TODO
 ~~- Add login and register links~~
 ~~- Staff level auth for creating predicitions~~
 - OneToMany for user votes
-  - Alerts when predictions are almost deadline
+~~  - Alerts when predictions are almost deadline~~
 - Make a nicer user profile
   - Show all predictions that a user has made
   - Show predictions that a user has voted on
-    - Up and down seperate
+~~    - Up and down seperate~~
   - Show predictions ending soon
 - Commenting system (DISQUS)
-- Toggle sorting buttons (↕)
+- Toggle sorting buttons (↕) Javascript
 - Include up and down voters on prediction page

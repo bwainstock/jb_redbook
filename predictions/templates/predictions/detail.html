@@ -10,12 +10,12 @@
       {% csrf_token %}
 
       <button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_up">
-        {{ prediction.thumbs_up }}
+        {{ prediction.up_votes.count }}
         <span class="glyphicon glyphicon-thumbs-up" alt="submit"></span>
       </button>
 
       <button type="submit" style="border: 0; background: transparent" name="vote" value="thumbs_down">
-        {{ prediction.thumbs_down }}
+        {{ prediction.down_votes.count }}
         <span class="glyphicon glyphicon-thumbs-down" alt="submit"></span>
       </button>
     </form>

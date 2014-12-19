@@ -12,7 +12,9 @@
 
             {% for prediction in user.prediction_up.all %}
                 <a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a></br>
-                <!-- {{ prediction }} -->
+            {% endfor %}
+            {% for prediction in user.prediction_down.all %}
+                <a href="{% url 'predictions:detail' prediction.id %}">{{ prediction.prediction_text }}</a></br>
             {% endfor %}
         </p>
     </div>
