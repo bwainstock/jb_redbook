@@ -15,3 +15,7 @@ TODO
 - Commenting system (DISQUS)
 - Toggle sorting buttons (↕) Javascript
 - Include up and down voters on prediction page
+
+CHANGELOG
+---------
+12/19/14 - Past deadline date predictions don't show on index.html
