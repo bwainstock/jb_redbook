@@ -1,4 +1,4 @@
-import itertools
+import itertools, datetime
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -33,7 +33,8 @@ def index(request):
         return HttpResponseRedirect(reverse('predictions:index'))
     else:
         form = PredictionForm()
-        latest_predictions = Prediction.objects.order_by('-up_votes')
+        #latest_predictions = Prediction.objects.order_by('-up_votes')
+        latest_predictions = Prediction.objects.exclude(deadline_date__lt=datetime.date.today()).order_by('deadline_date')
         return_dict = {'form': form, 'latest_predictions': latest_predictions}
     return render(request, 'predictions/index.html', return_dict) 
 
