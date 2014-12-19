@@ -14,8 +14,12 @@ TODO
   - Show predictions ending soon
 - Commenting system (DISQUS)
 - Toggle sorting buttons (↕) Javascript
-- Include up and down voters on prediction page
+~~- Include up and down voters on prediction page~~
+- Expand on badge and message service
+  - JQuery to show/hide messaages on badge click
 
 CHANGELOG
 ---------
-12/19/14 - Past deadline date predictions don't show on index.html
+12/19/14
+- Past deadline date predictions don't show on index.html
+- Basic badge for message alerts          
