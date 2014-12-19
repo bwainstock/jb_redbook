@@ -9,6 +9,7 @@
         <span class="icon-bar"></span>
       </button>
       {% if user.is_authenticated %}
+      <span class="badge">{{ messages|length }}</span>
       <a class="navbar-brand" href="{% url 'predictions:profile' user %}">{{ user }}</a>
       {% else %}
       <a class="navbar-brand" href="{% url 'predictions:register' %}">Register</a>

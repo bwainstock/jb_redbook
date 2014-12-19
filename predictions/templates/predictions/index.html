@@ -7,12 +7,14 @@
   <header><h1>Redbook Predictions </h1></header>
   {{ userinfo }}
 {% if messages %}
+<div class="messages">
 {% for message in messages %}
 <div class="alert alert-{{ message.level_tag }} alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
   {{ message }}
 </div>
 {% endfor %}
+</div>
 {% endif %}
 
 {% if perms.predictions.add_prediction %}
