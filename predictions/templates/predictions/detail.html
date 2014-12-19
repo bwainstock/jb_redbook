@@ -29,6 +29,11 @@
                 <a href="{% url 'predictions:profile' user %}">{{ voted_user }}</a></br>
             {% endif %}
             {% endfor %}
+            {% for voted_user in prediction.down_votes.all %}
+            {% if voted_user != user %}
+                <a href="{% url 'predictions:profile' user %}">{{ voted_user }}</a></br>
+            {% endif %}
+            {% endfor %}
         </p>
     </div>
 </div>

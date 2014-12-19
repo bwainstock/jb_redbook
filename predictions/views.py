@@ -30,7 +30,6 @@ def index(request):
             data = form.cleaned_data
             p = Prediction(prediction_text=data['prediction'], deadline_date=data['deadline'])
             p.save()
-
         return HttpResponseRedirect(reverse('predictions:index'))
     else:
         form = PredictionForm()
